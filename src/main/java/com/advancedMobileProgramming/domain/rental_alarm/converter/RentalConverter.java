@@ -52,6 +52,7 @@ public class RentalConverter {
     public static RentalDtos.RentalInfoResponseDto toRentalInfoResponseDto(RentalDetail rentalDetail) {
 
         LocalDate dueAt = rentalDetail.getStartDate().plusWeeks(1);
+        Boolean overDue = dueAt.isBefore(LocalDate.now());
 
         return RentalDtos.RentalInfoResponseDto.builder()
                 .rentalDetailId(rentalDetail.getRentalId())
@@ -68,7 +69,7 @@ public class RentalConverter {
                 .dueAt(dueAt)                                 // LocalDate
                 .returnDate(rentalDetail.getReturnDate())     // LocalDate (null 가능)
                 .returnStatus(rentalDetail.getReturnStatus())
-                .overdue(rentalDetail.getOverdue())
+                .overdue(overDue)
                 .build();
     }
 
